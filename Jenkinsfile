@@ -68,11 +68,6 @@ pipeline {
             }
         }
          stage('Code Coverage') {
-            steps {
-                echo 'Code coverage Measurement'
-                sh'mvn jacoco:report'
-                // publication 
-stage('Code Coverage') {
              steps {
                 // tes commandes shell ou appels d’outils ici
                 sh 'mvn clean test jacoco:report'
@@ -86,7 +81,8 @@ stage('Code Coverage') {
                   exclusionPattern: 'src/test/**'
                 ])
               }
-            }
+            }  
+        }
     stage('Code Analysis') {
             steps {
                 // Exécution de Checkstyle
@@ -176,4 +172,3 @@ stage('Code Coverage') {
         }
     }
 }
-
