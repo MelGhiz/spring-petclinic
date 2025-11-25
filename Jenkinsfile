@@ -72,15 +72,21 @@ pipeline {
                 echo 'Code coverage Measurement'
                 sh'mvn jacoco:report'
                 // publication 
-                jacoco(
-                    execPattern: 'target/jacoco.exec',
-                    classPattern: 'target/classes',
-                    sourcePattern: 'src/main/java',
-                    exclusionPattern: 'src/test/**'
-                )
-                                 
+stage('Code Coverage') {
+             steps {
+                // tes commandes shell ou appels d’outils ici
+                sh 'mvn clean test jacoco:report'
+                  }
+            post {
+              always {
+                step([$class: 'JacocoPublisher',
+                  execPattern: 'target/jacoco.exec',
+                  classPattern: 'target/classes',
+                  sourcePattern: 'src/main/java',
+                  exclusionPattern: 'src/test/**'
+                ])
+              }
             }
-        }
     stage('Code Analysis') {
             steps {
                 // Exécution de Checkstyle
